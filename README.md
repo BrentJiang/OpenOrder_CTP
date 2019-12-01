@@ -15,6 +15,7 @@ CTP接口的二次封装，实现委托状态和成交的严格排序与缓存�
 
 使用OpenOrder(CTP)替换原生CTP接口的使用方式：
 - C++中include使用OpenOrder(CTP)提供的API头文件。
+- 链接“OpenOrderd.lib”和“ctp_wrapperd.lib”。在运行时需要使用“OpenOrderd.dll”。
 - 增加了`namespace OpenOrder`。
 - 取消CreateFtdcTraderApi函数的入参，Init()增加参数，为pCounterConfig，请传入配置信息。
 - 撤单时，仅需要在ReqOrderAction参数中。（暂不支持`THOST_FTDC_AF_Modify`）
