@@ -35,7 +35,7 @@ CTP接口的二次封装，实现委托状态和成交的严格排序与缓存�
 - 成交回报总是在委托状态推送前。
 - 可以确认委托的唯一编号：`ORRequestID`，无需自行处理`OrderRef`、`SessionID`、`FrontID`等信息。如果是补单，则为负数。
     - 所有`ORRequestID`的编号值的`绝对值`是单调递增的（不一定连续）。
-- 撤单失败通过`onErrRtnOrderCancel`返回。
+- 撤单失败通过onRtnOrder即可得到状态变化。`onErrRtnOrderCancel`也有返回。
 
 ### 状态机
 状态机定义如下图所示（`废单`、`已撤`、`部成部撤`、`已成`等四种为最终状态）：
