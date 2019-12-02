@@ -1,10 +1,10 @@
 /////////////////////////////////////////////////////////////////////////
-///@system ĞÂÒ»´ú½»Ò×ËùÏµÍ³
-///@company ÉÏº£ÆÚ»õĞÅÏ¢¼¼ÊõÓĞÏŞ¹«Ë¾
+///@system æ–°ä¸€ä»£äº¤æ˜“æ‰€ç³»ç»Ÿ
+///@company ä¸Šæµ·æœŸè´§ä¿¡æ¯æŠ€æœ¯æœ‰é™å…¬å¸
 ///@file ThostFtdcTraderApi.h
-///@brief ¶¨ÒåÁË¿Í»§¶Ë½Ó¿Ú
+///@brief å®šä¹‰äº†å®¢æˆ·ç«¯æ¥å£
 ///@history 
-///20060106	ÕÔºèê»		´´½¨¸ÃÎÄ¼ş
+///20060106	èµµé¸¿æ˜Š		åˆ›å»ºè¯¥æ–‡ä»¶
 /////////////////////////////////////////////////////////////////////////
 
 #if !defined(OPENORDER_THOST_FTDCTRADERAPI_H)
@@ -38,169 +38,223 @@ enum level_enum
 	off = 6,
 };
 
-// ½»Ò×ÕÊºÅÅäÖÃ½á¹¹
+// äº¤æ˜“å¸å·é…ç½®ç»“æ„
 struct InvestorConfig {
-	// ½»Ò×ÕËºÅÃû³Æ¡£¿ÉÎª¿Õ¡£
+	InvestorConfig() {}
+	InvestorConfig(const InvestorConfig& other) {
+		this->name = other.name;
+		this->investor_id = other.investor_id;
+		this->broker_id = other.broker_id;
+		this->user_id = other.user_id;
+		this->account_code = other.account_code;
+		this->password = other.password;
+		this->client_id = other.client_id;
+	}
+	InvestorConfig& operator=(const InvestorConfig& other) {
+		this->name = other.name;
+		this->investor_id = other.investor_id;
+		this->broker_id = other.broker_id;
+		this->user_id = other.user_id;
+		this->account_code = other.account_code;
+		this->password = other.password;
+		this->client_id = other.client_id;
+		return *this;
+	}
+	// äº¤æ˜“è´¦å·åç§°ã€‚å¯ä¸ºç©ºã€‚
 	std::string name;
-	// ½»Ò×ÕËºÅ±àºÅ£¬OpenOrderµÄÄÚ²¿±àºÅ£¬Ğè±£Ö¤²»ÎªÖØ¸´¡£Ä¬ÈÏÎª0¼´¿É¡£
+	// äº¤æ˜“è´¦å·ç¼–å·ï¼ŒOpenOrderçš„å†…éƒ¨ç¼–å·ï¼Œéœ€ä¿è¯ä¸ä¸ºé‡å¤ã€‚é»˜è®¤ä¸º0å³å¯ã€‚
 	int32_t investor_id;
-	// ÓÃ»§ÕÊºÅ±àºÅ¡£¶ÔÓÚCTP£¬user_idµÈÍ¬ÓÚaccount_code£¨Á½ÕßÓ¦Í¬Ê±ÌîÈë£©¡£
+	// ç»çºªå…¬å¸ä»£ç 
+	std::string broker_id;
+	// ç”¨æˆ·å¸å·ç¼–å·ã€‚å¯¹äºCTPï¼Œuser_idç­‰åŒäºaccount_codeï¼ˆä¸¤è€…åº”åŒæ—¶å¡«å…¥ï¼‰ã€‚
 	std::string user_id;
-	// ×Ê½ğÕÊºÅ±àºÅ¡£¶ÔÓÚCTP£¬user_idµÈÍ¬ÓÚaccount_code£¨Á½ÕßÓ¦Í¬Ê±ÌîÈë£©¡£
+	// èµ„é‡‘å¸å·ç¼–å·ã€‚å¯¹äºCTPï¼Œuser_idç­‰åŒäºaccount_codeï¼ˆä¸¤è€…åº”åŒæ—¶å¡«å…¥ï¼‰ã€‚
 	std::string account_code;
-	/// ×Ê½ğÕÊºÅÃÜÂë£¨½»Ò×ÃÜÂë£©
+	/// èµ„é‡‘å¸å·å¯†ç ï¼ˆäº¤æ˜“å¯†ç ï¼‰
 	std::string password;
+	// å®¢æˆ·å·ï¼ˆäº¤æ˜“ç¼–ç ï¼‰ã€‚å¯ä¸ºç©ºã€‚
+	std::string client_id;
 
 };
 
-// ¹ñÌ¨ÅäÖÃ½á¹¹
+// æŸœå°é…ç½®ç»“æ„
 struct CounterConfig {
+	CounterConfig() {}
+	CounterConfig(const CounterConfig& other) {
+		this->name = other.name;
+		this->channel_type = other.channel_type;
+		this->channel_id = other.channel_id;
+		this->custom_config = other.custom_config;
+		this->auto_query = other.auto_query;
+		this->auto_query_interval = other.auto_query_interval;
+		this->investor = other.investor;
+		this->data_path = other.data_path;
+		this->log_pathname = other.log_pathname;
+		this->log_level = other.log_level;
+		this->ipv4_address = other.ipv4_address;
+		this->ipv4_port = other.ipv4_port;
+	}
+	CounterConfig& operator=(const CounterConfig& other) {
+		this->name = other.name;
+		this->channel_type = other.channel_type;
+		this->channel_id = other.channel_id;
+		this->custom_config = other.custom_config;
+		this->auto_query = other.auto_query;
+		this->auto_query_interval = other.auto_query_interval;
+		this->investor = other.investor;
+		this->data_path = other.data_path;
+		this->log_pathname = other.log_pathname;
+		this->log_level = other.log_level;
+		this->ipv4_address = other.ipv4_address;
+		this->ipv4_port = other.ipv4_port;
+		return *this;
+	}
 	// The unique name of the Counter connected. Default to "CTP".
 	std::string name;
-	// 2 - CTP¹ñÌ¨,M - CTP2Mini,L - LTS¹ñÌ¨,Q - QMT¹ñÌ¨,X - TradeX½ÓÈë
+	// '2' - CTPæŸœå°,'M' - CTP2Mini,'L' - LTSæŸœå°,'Q' - QMTæŸœå°,'X' - TradeXæ¥å…¥
 	std::string channel_type;
-	// ¹ñÌ¨Á´Â·Í¨µÀ±àºÅ£¬Ä¬ÈÏÎª1¼´¿É¡£
+	// æŸœå°é“¾è·¯é€šé“ç¼–å·ï¼Œé»˜è®¤ä¸º1å³å¯ã€‚
 	int32_t channel_id;
-	// ×Ô¶¨Òå¹ñÌ¨ÅäÖÃ²ÎÊı¡£ÓÃÓÚÊäÈëCTP¹ñÌ¨µÄBrokerID¡¢AuthenticationCodeµÈ¹ñÌ¨ÅäÖÃĞÅÏ¢¡£
-	// ÏêÏ¸²Î¿¼Readme.mdÎÄµµ¡£
+	// è‡ªå®šä¹‰æŸœå°é…ç½®å‚æ•°ã€‚ç”¨äºè¾“å…¥CTPæŸœå°çš„BrokerIDã€AuthenticationCodeç­‰æŸœå°é…ç½®ä¿¡æ¯ã€‚
+	// è¯¦ç»†å‚è€ƒReadme.mdæ–‡æ¡£ã€‚
 	std::string custom_config;
-	// ÊÇ·ñ×Ô¶¯¶¨Ê±²éÑ¯Î¯ÍĞºÍ³É½»»Ø±¨¡£
+	// æ˜¯å¦è‡ªåŠ¨å®šæ—¶æŸ¥è¯¢å§”æ‰˜å’Œæˆäº¤å›æŠ¥ã€‚
 	bool auto_query;
-	// ×Ô¶¯²éÑ¯Î¯ÍĞºÍ³É½»»Ø±¨µÄÊ±¼ä¼ä¸ô£¬µ¥Î»ÎªÃë¡£
+	// è‡ªåŠ¨æŸ¥è¯¢å§”æ‰˜å’Œæˆäº¤å›æŠ¥çš„æ—¶é—´é—´éš”ï¼Œå•ä½ä¸ºç§’ã€‚
 	int32_t auto_query_interval;
-	// ½»Ò×ÕËºÅ¡£Ä¿Ç°½öÖ§³ÖÒ»¸öÍ¨µÀÒ»¸öÕÊºÅ£¬²»Ö§³ÖÍ¨µÀ¸´ÓÃ¡£
+	// äº¤æ˜“è´¦å·ã€‚ç›®å‰ä»…æ”¯æŒä¸€ä¸ªé€šé“ä¸€ä¸ªå¸å·ï¼Œä¸æ”¯æŒé€šé“å¤ç”¨ã€‚
 	InvestorConfig investor;
-	// ´æ·Å»º´æÎÄ¼şµÄÎÄ¼ş¼Ğ¡£
+	// å­˜æ”¾ç¼“å­˜æ–‡ä»¶çš„æ–‡ä»¶å¤¹ã€‚
 	std::string data_path;
-	// ÈÕÖ¾ÎÄ¼şµÄÂ·¾¶ºÍÎÄ¼şÃû¡£
+	// æ—¥å¿—æ–‡ä»¶çš„è·¯å¾„å’Œæ–‡ä»¶åã€‚
 	std::string log_pathname;
-	// ÈÕÖ¾¼¶±ğ.
+	// æ—¥å¿—çº§åˆ«.
 	level_enum log_level;
-	// Èç¹ûÎ´ÔÚcustom_configÖĞÖ¸¶¨·şÎñÆ÷µØÖ·£¬¿ÉÒÔÓÃipv4_addressÖ¸¶¨¡£
+	// å¦‚æœæœªåœ¨custom_configä¸­æŒ‡å®šæœåŠ¡å™¨åœ°å€ï¼Œå¯ä»¥ç”¨ipv4_addressæŒ‡å®šã€‚
 	std::string ipv4_address;
-	// Èç¹ûÎ´ÔÚcustom_configÖĞÖ¸¶¨·şÎñÆ÷¶Ë¿Ú£¬¿ÉÒÔÓÃipv4_portÖ¸¶¨¡£
+	// å¦‚æœæœªåœ¨custom_configä¸­æŒ‡å®šæœåŠ¡å™¨ç«¯å£ï¼Œå¯ä»¥ç”¨ipv4_portæŒ‡å®šã€‚
 	int32_t ipv4_port;
 };
 
 class CThostFtdcTraderSpi
 {
 public:
-	///µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨½¨Á¢ÆğÍ¨ĞÅÁ¬½ÓÊ±£¨»¹Î´µÇÂ¼Ç°£©£¬¸Ã·½·¨±»µ÷ÓÃ¡£
+	///å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°å»ºç«‹èµ·é€šä¿¡è¿æ¥æ—¶ï¼ˆè¿˜æœªç™»å½•å‰ï¼‰ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
 	virtual void OnFrontConnected(){};
 	
-	///µ±¿Í»§¶ËÓë½»Ò×ºóÌ¨Í¨ĞÅÁ¬½Ó¶Ï¿ªÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£µ±·¢ÉúÕâ¸öÇé¿öºó£¬API»á×Ô¶¯ÖØĞÂÁ¬½Ó£¬¿Í»§¶Ë¿É²»×ö´¦Àí¡£
-	///@param nReason ´íÎóÔ­Òò
-	///        0x1001 ÍøÂç¶ÁÊ§°Ü
-	///        0x1002 ÍøÂçĞ´Ê§°Ü
-	///        0x2001 ½ÓÊÕĞÄÌø³¬Ê±
-	///        0x2002 ·¢ËÍĞÄÌøÊ§°Ü
-	///        0x2003 ÊÕµ½´íÎó±¨ÎÄ
+	///å½“å®¢æˆ·ç«¯ä¸äº¤æ˜“åå°é€šä¿¡è¿æ¥æ–­å¼€æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚å½“å‘ç”Ÿè¿™ä¸ªæƒ…å†µåï¼ŒAPIä¼šè‡ªåŠ¨é‡æ–°è¿æ¥ï¼Œå®¢æˆ·ç«¯å¯ä¸åšå¤„ç†ã€‚
+	///@param nReason é”™è¯¯åŸå› 
+	///        0x1001 ç½‘ç»œè¯»å¤±è´¥
+	///        0x1002 ç½‘ç»œå†™å¤±è´¥
+	///        0x2001 æ¥æ”¶å¿ƒè·³è¶…æ—¶
+	///        0x2002 å‘é€å¿ƒè·³å¤±è´¥
+	///        0x2003 æ”¶åˆ°é”™è¯¯æŠ¥æ–‡
 	virtual void OnFrontDisconnected(int nReason){};
 		
-	///ĞÄÌø³¬Ê±¾¯¸æ¡£µ±³¤Ê±¼äÎ´ÊÕµ½±¨ÎÄÊ±£¬¸Ã·½·¨±»µ÷ÓÃ¡£
-	///@param nTimeLapse ¾àÀëÉÏ´Î½ÓÊÕ±¨ÎÄµÄÊ±¼ä
+	///å¿ƒè·³è¶…æ—¶è­¦å‘Šã€‚å½“é•¿æ—¶é—´æœªæ”¶åˆ°æŠ¥æ–‡æ—¶ï¼Œè¯¥æ–¹æ³•è¢«è°ƒç”¨ã€‚
+	///@param nTimeLapse è·ç¦»ä¸Šæ¬¡æ¥æ”¶æŠ¥æ–‡çš„æ—¶é—´
 	virtual void OnHeartBeatWarning(int nTimeLapse){};
 
-	///±¨µ¥Â¼ÈëÇëÇóÏìÓ¦
+	///æŠ¥å•å½•å…¥è¯·æ±‚å“åº”
 	virtual void OnRspOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯±¨µ¥ÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢æŠ¥å•å“åº”
 	virtual void OnRspQryOrder(CThostFtdcOrderField *pOrder, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯³É½»ÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢æˆäº¤å“åº”
 	virtual void OnRspQryTrade(CThostFtdcTradeField *pTrade, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²ÖÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“å“åº”
 	virtual void OnRspQryInvestorPosition(CThostFtdcInvestorPositionField *pInvestorPosition, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯×Ê½ğÕË»§ÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢èµ„é‡‘è´¦æˆ·å“åº”
 	virtual void OnRspQryTradingAccount(CThostFtdcTradingAccountField *pTradingAccount, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯ºÏÔ¼ÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢åˆçº¦å“åº”
 	virtual void OnRspQryInstrument(CThostFtdcInstrumentField *pInstrument, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///ÇëÇó²éÑ¯ĞĞÇéÏìÓ¦
+	///è¯·æ±‚æŸ¥è¯¢è¡Œæƒ…å“åº”
 	virtual void OnRspQryDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData, CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///´íÎóÓ¦´ğ
+	///é”™è¯¯åº”ç­”
 	virtual void OnRspError(CThostFtdcRspInfoField *pRspInfo, int nRequestID, bool bIsLast) {};
 
-	///±¨µ¥Í¨Öª
+	///æŠ¥å•é€šçŸ¥
 	virtual void OnRtnOrder(CThostFtdcOrderField *pOrder) {};
 
-	///³É½»Í¨Öª
+	///æˆäº¤é€šçŸ¥
 	virtual void OnRtnTrade(CThostFtdcTradeField *pTrade) {};
 
-	///±¨µ¥Â¼Èë´íÎó»Ø±¨
+	///æŠ¥å•å½•å…¥é”™è¯¯å›æŠ¥
 	virtual void OnErrRtnOrderInsert(CThostFtdcInputOrderField *pInputOrder, CThostFtdcRspInfoField *pRspInfo) {};
 
-	///Éî¶ÈĞĞÇéÍ¨Öª
+	///æ·±åº¦è¡Œæƒ…é€šçŸ¥
 	virtual void OnRtnDepthMarketData(CThostFtdcDepthMarketDataField *pDepthMarketData) {};
 };
 
 class TRADER_API_EXPORT CThostFtdcTraderApi
 {
 public:
-	///´´½¨TraderApi
-	///@return ´´½¨³öµÄUserApi
+	///åˆ›å»ºTraderApi
+	///@return åˆ›å»ºå‡ºçš„UserApi
 	static CThostFtdcTraderApi *CreateFtdcTraderApi();
 	
-	///É¾³ı½Ó¿Ú¶ÔÏó±¾Éí
-	///@remark ²»ÔÙÊ¹ÓÃ±¾½Ó¿Ú¶ÔÏóÊ±,µ÷ÓÃ¸Ãº¯ÊıÉ¾³ı½Ó¿Ú¶ÔÏó
+	///åˆ é™¤æ¥å£å¯¹è±¡æœ¬èº«
+	///@remark ä¸å†ä½¿ç”¨æœ¬æ¥å£å¯¹è±¡æ—¶,è°ƒç”¨è¯¥å‡½æ•°åˆ é™¤æ¥å£å¯¹è±¡
 	virtual void Release() = 0;
 	
-	///³õÊ¼»¯
-	///@param pszConfigPath ´æÖüÅäÖÃĞÅÏ¢
-	///@remark ³õÊ¼»¯ÔËĞĞ»·¾³,Ö»ÓĞµ÷ÓÃºó,½Ó¿Ú²Å¿ªÊ¼¹¤×÷
+	///åˆå§‹åŒ–
+	///@param pszConfigPath å­˜è´®é…ç½®ä¿¡æ¯
+	///@remark åˆå§‹åŒ–è¿è¡Œç¯å¢ƒ,åªæœ‰è°ƒç”¨å,æ¥å£æ‰å¼€å§‹å·¥ä½œ
 	virtual void Init(const CounterConfig* pCounterConfig) = 0;
 	
-	///µÈ´ı½Ó¿ÚÏß³Ì½áÊøÔËĞĞ
-	///@return Ïß³ÌÍË³ö´úÂë
+	///ç­‰å¾…æ¥å£çº¿ç¨‹ç»“æŸè¿è¡Œ
+	///@return çº¿ç¨‹é€€å‡ºä»£ç 
 	virtual int Join() = 0;
 	
-	///×¢²á»Øµ÷½Ó¿Ú
-	///@param pSpi ÅÉÉú×Ô»Øµ÷½Ó¿ÚÀàµÄÊµÀı
+	///æ³¨å†Œå›è°ƒæ¥å£
+	///@param pSpi æ´¾ç”Ÿè‡ªå›è°ƒæ¥å£ç±»çš„å®ä¾‹
 	virtual void RegisterSpi(CThostFtdcTraderSpi *pSpi) = 0;
 	
-	///±¨µ¥Â¼ÈëÇëÇó
+	///æŠ¥å•å½•å…¥è¯·æ±‚
 	virtual int ReqOrderInsert(CThostFtdcInputOrderField *pInputOrder, int nRequestID) = 0;
 
-	///±¨µ¥²Ù×÷ÇëÇó
+	///æŠ¥å•æ“ä½œè¯·æ±‚
 	virtual int ReqOrderAction(CThostFtdcInputOrderActionField *pInputOrderAction, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯±¨µ¥
+	///è¯·æ±‚æŸ¥è¯¢æŠ¥å•
 	virtual int ReqQryOrder(CThostFtdcQryOrderField *pQryOrder, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯³É½»
+	///è¯·æ±‚æŸ¥è¯¢æˆäº¤
 	virtual int ReqQryTrade(CThostFtdcQryTradeField *pQryTrade, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯Í¶×ÊÕß³Ö²Ö
+	///è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…æŒä»“
 	virtual int ReqQryInvestorPosition(CThostFtdcQryInvestorPositionField *pQryInvestorPosition, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯×Ê½ğÕË»§
+	///è¯·æ±‚æŸ¥è¯¢èµ„é‡‘è´¦æˆ·
 	virtual int ReqQryTradingAccount(CThostFtdcQryTradingAccountField *pQryTradingAccount, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯Í¶×ÊÕß
+	///è¯·æ±‚æŸ¥è¯¢æŠ•èµ„è€…
 	virtual int ReqQryInvestor(CThostFtdcQryInvestorField *pQryInvestor, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯½»Ò×±àÂë
+	///è¯·æ±‚æŸ¥è¯¢äº¤æ˜“ç¼–ç 
 	virtual int ReqQryTradingCode(CThostFtdcQryTradingCodeField *pQryTradingCode, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯ºÏÔ¼
+	///è¯·æ±‚æŸ¥è¯¢åˆçº¦
 	virtual int ReqQryInstrument(CThostFtdcQryInstrumentField *pQryInstrument, int nRequestID) = 0;
 
-	///ÇëÇó²éÑ¯ĞĞÇé
+	///è¯·æ±‚æŸ¥è¯¢è¡Œæƒ…
 	virtual int ReqQryDepthMarketData(CThostFtdcQryDepthMarketDataField *pQryDepthMarketData, int nRequestID) = 0;
 	
-	///¶©ÔÄĞĞÇé¡£
-	///@param ppInstrumentID ºÏÔ¼ID  
-	///@param nCount Òª¶©ÔÄ/ÍË¶©ĞĞÇéµÄºÏÔ¼¸öÊı
+	///è®¢é˜…è¡Œæƒ…ã€‚
+	///@param ppInstrumentID åˆçº¦ID  
+	///@param nCount è¦è®¢é˜…/é€€è®¢è¡Œæƒ…çš„åˆçº¦ä¸ªæ•°
 	///@remark 
 	virtual int SubscribeMarketData(char *ppInstrumentID[], int nCount) = 0;
 
-	///ÍË¶©ĞĞÇé¡£
-	///@param ppInstrumentID ºÏÔ¼ID  
-	///@param nCount Òª¶©ÔÄ/ÍË¶©ĞĞÇéµÄºÏÔ¼¸öÊı
+	///é€€è®¢è¡Œæƒ…ã€‚
+	///@param ppInstrumentID åˆçº¦ID  
+	///@param nCount è¦è®¢é˜…/é€€è®¢è¡Œæƒ…çš„åˆçº¦ä¸ªæ•°
 	///@remark 
 	virtual int UnSubscribeMarketData(char *ppInstrumentID[], int nCount) = 0;
 protected:
